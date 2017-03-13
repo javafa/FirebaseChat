@@ -38,17 +38,21 @@ public class MainActivity extends AppCompatActivity {
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = editId.getText().toString();
+                final String id = editId.getText().toString();
                 final String pw = editPw.getText().toString();
 
+                // userRef.child(id) 검색에 대한 callback
                 userRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.getChildrenCount() > 0){
                             String fbPw = dataSnapshot.child("password").getValue().toString();
+                            String name = dataSnapshot.child("name").getValue().toString();
                             Log.w("MainActivity","pw="+fbPw);
                             if(fbPw.equals(pw)){
                                 Intent intent = new Intent(MainActivity.this, RoomListActivity.class);
+                                intent.putExtra("userid",id);
+                                intent.putExtra("username",name);
                                 startActivity(intent);
                             }else{
                                 Toast.makeText(MainActivity.this, "비밀번호가 틀렸습니다", Toast.LENGTH_SHORT).show();

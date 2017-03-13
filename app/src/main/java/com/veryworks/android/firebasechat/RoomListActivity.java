@@ -32,10 +32,17 @@ public class RoomListActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference roomRef;
 
+    String userid;
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_list);
+
+        Intent intent = getIntent();
+        userid = intent.getExtras().getString("userid");
+        username = intent.getExtras().getString("username");
 
         database = FirebaseDatabase.getInstance();
         roomRef = database.getReference("room");
@@ -51,6 +58,8 @@ public class RoomListActivity extends AppCompatActivity {
                 Intent intent = new Intent(RoomListActivity.this, RoomActivity.class);
                 intent.putExtra("key",room.getKey());
                 intent.putExtra("title",room.getTitle());
+                intent.putExtra("userid",userid);
+                intent.putExtra("username",username);
                 startActivity(intent);
             }
         });
