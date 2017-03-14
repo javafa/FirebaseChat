@@ -81,6 +81,7 @@ public class RoomActivity extends AppCompatActivity {
     View.OnClickListener sendListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             DatabaseReference msgRef = roomRef.push();
             String msg = editMessage.getText().toString();
 
@@ -137,7 +138,7 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder>{
         Message msg = datas.get(position);
         holder.userName.setText(msg.getUsername());
         holder.msg.setText(msg.getMsg());
-        if(!userid.equals(msg.getUserid())){
+        if(userid.equals(msg.getUserid())){
             holder.itemLayout.setGravity(Gravity.RIGHT);
         }else{
             holder.itemLayout.setGravity(Gravity.LEFT);
