@@ -81,10 +81,8 @@ public class RoomActivity extends AppCompatActivity {
     View.OnClickListener sendListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String msgKey = roomRef.push().getKey();
+            DatabaseReference msgRef = roomRef.push();
             String msg = editMessage.getText().toString();
-
-            DatabaseReference msgRef = roomRef.child(msgKey);
 
             Map<String, String> msgMap = new HashMap<>();
             msgMap.put("userid",userid);
@@ -105,7 +103,6 @@ public class RoomActivity extends AppCompatActivity {
                 String key = snapshot.getKey();
                 Message msg = snapshot.getValue(Message.class);
                 msg.setKey(key);
-
                 datas.add(msg);
             }
             adapter.notifyDataSetChanged();
@@ -142,6 +139,8 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder>{
         holder.msg.setText(msg.getMsg());
         if(!userid.equals(msg.getUserid())){
             holder.itemLayout.setGravity(Gravity.RIGHT);
+        }else{
+            holder.itemLayout.setGravity(Gravity.LEFT);
         }
     }
 

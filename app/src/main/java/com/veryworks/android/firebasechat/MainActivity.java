@@ -3,7 +3,6 @@ package com.veryworks.android.firebasechat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,14 +40,16 @@ public class MainActivity extends AppCompatActivity {
                 final String id = editId.getText().toString();
                 final String pw = editPw.getText().toString();
 
-                // userRef.child(id) 검색에 대한 callback
+                // DB 1. 파이어베이스로 child(id) 레퍼런스에 대한 쿼리를 날린다.
                 userRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    // DB 2.파이어베이스는 데이터쿼리가 완료되면 스냅샷에 담아서 onDataChange 를 호출해준다
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.getChildrenCount() > 0){
                             String fbPw = dataSnapshot.child("password").getValue().toString();
                             String name = dataSnapshot.child("name").getValue().toString();
-                            Log.w("MainActivity","pw="+fbPw);
+
                             if(fbPw.equals(pw)){
                                 Intent intent = new Intent(MainActivity.this, RoomListActivity.class);
                                 intent.putExtra("userid",id);
