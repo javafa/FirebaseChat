@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // 값이 모두 입력되었으면
                     if (!"".equals(upid) && !"".equals(upname) && !"".equals(uppw)) {
+
                         // 1. id 가 있는지 체크
                         userRef.child(upid).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -137,7 +138,9 @@ public class MainActivity extends AppCompatActivity {
         userRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
                 String addedId = dataSnapshot.getKey();
+
                 if(addedId.equals(upid)){
                     Toast.makeText(getBaseContext()
                             , "등록되었습니다"
